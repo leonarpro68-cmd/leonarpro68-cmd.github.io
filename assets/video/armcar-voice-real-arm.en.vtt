@@ -1,0 +1,28 @@
+WEBVTT
+
+00:05.500 --> 00:08.500
+"Pituca, can you move the arm?"
+
+00:08.500 --> 00:19.600
+Agent: Yes. I just moved the arm to the rest position with the gripper open.
+
+00:19.600 --> 00:26.700
+Agent: Tell me where you want it to go, or what to pick up.
+
+00:26.700 --> 00:40.800
+"Pituca, I want you to move the arm up."
+
+00:40.800 --> 00:46.100
+Agent: Done, I've stretched the arm upward.
+
+00:52.100 --> 00:59.100
+"Pituca, now go back to home."
+
+00:59.100 --> 01:09.200
+Agent: I'm back at home with the gripper open.
+
+01:12.200 --> 01:28.600
+"Close, Pituca, close the gripper."
+
+01:28.600 --> 01:30.600
+Agent: Gripper closed.

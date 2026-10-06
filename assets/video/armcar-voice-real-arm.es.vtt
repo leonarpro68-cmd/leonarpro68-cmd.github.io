@@ -1,0 +1,28 @@
+WEBVTT
+
+00:05.500 --> 00:08.500
+"Pituca, ¿puedes mover el brazo?"
+
+00:08.500 --> 00:19.600
+Agente: Sí, puedo. Acabo de llevar el brazo a la posición de reposo con la pinza abierta.
+
+00:19.600 --> 00:26.700
+Agente: Dime a dónde quieres que lo mueva o qué cojo.
+
+00:26.700 --> 00:40.800
+"Pituca, quiero que muevas el brazo hacia arriba."
+
+00:40.800 --> 00:46.100
+Agente: Listo, he estirado el brazo hacia arriba.
+
+00:52.100 --> 00:59.100
+"Pituca, ahora quiero que vuelvas a home."
+
+00:59.100 --> 01:09.200
+Agente: Ya estoy de vuelta en home con la pinza abierta.
+
+01:12.200 --> 01:28.600
+"Cierra, Pituca, cierra el gripper."
+
+01:28.600 --> 01:30.600
+Agente: Pinza cerrada.

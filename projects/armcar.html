@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ArmCar | Leonardo Iturriaga</title>
+<meta name="description" content="A wheeled robot with an SO-101 arm, split between a PC (brain) and a Raspberry Pi 5 (body) over ROS 2 Jazzy. It is driven with a DualSense controller,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="../css/style.css">
+<script src="../js/main.js"></script>
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html">L<span>.</span>ITURRIAGA</a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="../index.html">Home</a>
+      <a href="../projects/index.html" class="active">Projects</a>
+      <a href="../cv/index.html">CV</a>
+    </nav>
+    <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle light/dark theme"><svg class="sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg></button>
+  </div>
+</header>
+
+<main>
+  <article class="article">
+    <a class="back" href="index.html">&larr; ALL PROJECTS</a>
+    <h1>ArmCar: Mobile Manipulator with a Voice-Controlled AI Agent</h1>
+    <div class="meta" style="margin-top:12px"><span class="status wip">In progress</span></div>
+    <p class="lead">A wheeled robot with an SO-101 arm, split between a PC (brain) and a Raspberry&nbsp;Pi&nbsp;5 (body) over ROS&nbsp;2 Jazzy. It is driven with a DualSense controller, joint by joint or with inverse kinematics, and has a Claude-based agent you talk to by voice that can look through a webcam and moves the real arm.</p>
+    <div class="tags"><span>ROS 2 JAZZY</span><span>INVERSE KINEMATICS</span><span>LLM AGENTS</span><span>SO-101</span><span>RASPBERRY PI 5</span></div>
+    <p style="margin-top:16px;font-family:var(--mono);font-size:13px"><a href="https://github.com/leonarpro68-cmd/Armcar" target="_blank" rel="noopener">Code and docs on GitHub &rarr; Armcar</a></p>
+
+    <figure>
+      <div class="frame"><img src="../assets/img/projects/armcar-rviz-alcanzando.webp" width="900" height="595" alt="SO-101 arm in RViz reaching forward" loading="lazy"></div>
+      <figcaption>Fig. 1 &mdash; SO-101 arm in RViz, reaching forward.</figcaption>
+    </figure>
+
+    <h2><span class="n">01</span>What it does</h2>
+    <ul>
+      <li><b>DualSense teleoperation</b> over Bluetooth, joint by joint or in Cartesian space with inverse kinematics (pure numpy).</li>
+      <li><b>Differential drive</b> with two DC motors and an L298N, with a watchdog that stops the motors if <code>/cmd_vel</code> stops arriving.</li>
+      <li><b>AI agent</b> built on Claude, with tools to move the arm; every command goes through joint limits and interpolation before reaching the servos.</li>
+      <li><b>Local voice, no cloud:</b> wake word, speech recognition with Whisper (faster-whisper), speech with Piper, and it can be interrupted while talking.</li>
+      <li><b>Animated face</b> on a 0.96&Prime; I2C OLED that changes when the robot thinks, looks or talks.</li>
+      <li><b>Eyes:</b> a USB webcam takes a photo when the agent asks for one, and Claude describes the scene.</li>
+    </ul>
+
+    <h2><span class="n">02</span>Voice agent on the real arm</h2>
+    <p>The voice agent now drives the real SO-101, not just RViz. Everything runs as in the architecture below: the wake word (&ldquo;Pituca&rdquo;) and speech recognition on the PC, Claude decides which arm tool to call, the command goes through limits and interpolation, and the Raspberry&nbsp;Pi&nbsp;5 moves the servos while the OLED face reacts. In the clip I ask it, in Spanish, to move the arm, raise it, go back home and close the gripper. Turn on subtitles for an English translation.</p>
+    <figure>
+      <div class="frame" style="max-width:420px">
+        <video controls playsinline preload="metadata" poster="../assets/video/armcar-voice-real-arm-poster.jpg" width="406" height="720" style="width:100%;height:auto;display:block">
+          <source src="../assets/video/armcar-voice-real-arm.mp4" type="video/mp4">
+          <track kind="subtitles" src="../assets/video/armcar-voice-real-arm.en.vtt" srclang="en" label="English" default>
+          <track kind="subtitles" src="../assets/video/armcar-voice-real-arm.es.vtt" srclang="es" label="Espa&ntilde;ol">
+        </video>
+      </div>
+      <figcaption>Fig. 2 &mdash; Voice commands to the real arm (audio in Spanish, English subtitles).</figcaption>
+    </figure>
+    <div class="fig-grid">
+      <figure style="margin:0"><div class="frame"><img src="../assets/img/projects/armcar-real-home.webp" width="576" height="720" alt="Real SO-101 arm at home with the gripper open, Raspberry Pi with OLED face behind" loading="lazy"></div><figcaption>Fig. 3a &mdash; &ldquo;Go back home&rdquo;: rest pose, gripper open.</figcaption></figure>
+      <figure style="margin:0"><div class="frame"><img src="../assets/img/projects/armcar-real-up.webp" width="576" height="720" alt="Real SO-101 arm stretched upward" loading="lazy"></div><figcaption>Fig. 3b &mdash; &ldquo;Move the arm up&rdquo;.</figcaption></figure>
+    </div>
+    <figure>
+      <div class="frame photo"><img src="../assets/img/projects/armcar-oled-face.webp" width="420" height="420" alt="Close-up of the OLED face on the Raspberry Pi" loading="lazy"></div>
+      <figcaption>Fig. 4 &mdash; Detail: the animated OLED face on the Pi (crop from the video).</figcaption>
+    </figure>
+
+    <h2><span class="n">03</span>Architecture</h2>
+    <p>The PC is the brain and the Raspberry&nbsp;Pi&nbsp;5 the body, both on ROS&nbsp;2 Jazzy / Ubuntu 24.04. Nothing on the PC talks to hardware directly; it only publishes topics. That is why IK and the AI agent were added without touching a line on the Pi.</p>
+    <table class="specs">
+      <tr><th>teleop_pkg (PC)</th><td>DualSense teleop: joint by joint or IK</td></tr>
+      <tr><th>armcar_description (PC)</th><td>URDF/xacro with official meshes and RViz bridge</td></tr>
+      <tr><th>brain_pkg (PC)</th><td>Claude agent node and a terminal client</td></tr>
+      <tr><th>voice_pkg (PC)</th><td>Speech-to-text and text-to-speech nodes</td></tr>
+      <tr><th>arm_driver_pkg (Pi)</th><td>Driver for the 6 ST3215 servos and a calibration CLI</td></tr>
+      <tr><th>motor_driver_pkg (Pi)</th><td>L298N drive with watchdog</td></tr>
+      <tr><th>face_pkg / camera_pkg (Pi)</th><td>OLED face and on-demand webcam capture</td></tr>
+    </table>
+
+    <h2><span class="n">04</span>RViz as a digital twin</h2>
+    <p>The URDF uses the <b>real</b> joint limits (calibrated servo ticks), not the nominal ones, so RViz never shows a pose the arm cannot reach. The teleop and the agent publish the same <code>/joint_commands</code> that drives the real arm, so what RViz shows with the Pi off is exactly what the hardware will do.</p>
+    <div class="fig-grid">
+      <figure style="margin:0"><div class="frame"><img src="../assets/img/projects/armcar-rviz-home.webp" width="900" height="595" alt="Home pose" loading="lazy"></div><figcaption>Home</figcaption></figure>
+      <figure style="margin:0"><div class="frame"><img src="../assets/img/projects/armcar-rviz-erguido.webp" width="900" height="595" alt="Arm upright" loading="lazy"></div><figcaption>Upright</figcaption></figure>
+    </div>
+    <div class="fig-grid">
+      <figure style="margin:0"><div class="frame"><img src="../assets/img/projects/armcar-rviz-saludo.webp" width="900" height="595" alt="Arm waving" loading="lazy"></div><figcaption>Waving</figcaption></figure>
+      <figure style="margin:0"><div class="frame"><img src="../assets/img/projects/armcar-rviz-agachado.webp" width="900" height="595" alt="Arm reaching to the floor" loading="lazy"></div><figcaption>Reaching to the floor</figcaption></figure>
+    </div>
+
+    <h2><span class="n">05</span>Hardware</h2>
+    <table class="specs">
+      <tr><th>Arm</th><td>SO-101 with 6 Feetech ST3215 servos</td></tr>
+      <tr><th>Compute</th><td>Raspberry&nbsp;Pi&nbsp;5 (Ubuntu 24.04 Server) + PC</td></tr>
+      <tr><th>Drive</th><td>2 &times; 12&nbsp;V DC motors, L298N H-bridge</td></tr>
+      <tr><th>I/O</th><td>0.96&Prime; SSD1306 OLED, USB webcam, DualSense, USB mic and speaker on the PC</td></tr>
+    </table>
+
+    <h2><span class="n">06</span>Next steps</h2>
+    <ul>
+      <li>Test the full voice + camera loop on the real arm (pick an object it sees).</li>
+      <li>Model the car chassis in the URDF and mount the arm on it.</li>
+      <li>Record demonstrations with two cameras for a LeRobot dataset.</li>
+    </ul>
+
+  </article>
+
+</main>
+
+<footer class="footer">
+  <span>&copy; <span id="year">2026</span> Leonardo Iturriaga Tisoc</span>
+  <span>Lima, Peru</span>
+  <a href="https://github.com/leonarpro68-cmd" target="_blank" rel="noopener">GitHub</a>
+  <a href="mailto:leonarpro68@gmail.com">Email</a>
+</footer>
+<div class="walker" id="walker" aria-hidden="true"><svg viewBox="0 0 60 100" width="38" height="63">
+  <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <g class="leg leg-back" opacity=".45">
+      <path d="M30 46 L31 61 L29 75"/>
+      <rect x="26" y="73" width="7" height="6" rx="1"/>
+      <g class="foot"><rect x="21" y="79" width="20" height="4" rx="2" fill="currentColor"/><g class="flame" stroke="none"><path d="M23 84 Q25 91 27 97 Q29 91 31 84 Z" fill="#ff9a1f"/><path d="M33 84 Q35 89 37 95 Q39 89 41 84 Z" fill="#ff9a1f"/><path d="M24.5 84 Q26 88 27 91 Q28 88 29.5 84 Z" fill="#ffe14d"/><path d="M34.5 84 Q36 87 37 89.5 Q38 87 39.5 84 Z" fill="#ffe14d"/></g></g>
+    </g>
+    <g class="body">
+      <path d="M24 9V4h12v5"/>
+      <rect x="19" y="9" width="22" height="22" rx="2"/>
+      <path d="M19 16h22M19 23h22M26 9v22M34 9v22" stroke-width="1.2"/>
+      <rect x="17" y="31" width="26" height="9" rx="1.5" fill="currentColor"/>
+      <rect x="26" y="40" width="8" height="6" rx="1"/>
+    </g>
+    <g class="leg leg-front">
+      <path d="M30 46 L31 61 L29 75"/>
+      <rect x="26" y="73" width="7" height="6" rx="1"/>
+      <g class="foot"><rect x="21" y="79" width="20" height="4" rx="2" fill="currentColor"/><g class="flame" stroke="none"><path d="M23 84 Q25 91 27 97 Q29 91 31 84 Z" fill="#ff9a1f"/><path d="M33 84 Q35 89 37 95 Q39 89 41 84 Z" fill="#ff9a1f"/><path d="M24.5 84 Q26 88 27 91 Q28 88 29.5 84 Z" fill="#ffe14d"/><path d="M34.5 84 Q36 87 37 89.5 Q38 87 39.5 84 Z" fill="#ffe14d"/></g></g>
+    </g>
+  </g>
+</svg></div>
+</body>
+</html>
